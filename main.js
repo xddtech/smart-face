@@ -1,7 +1,6 @@
 
 const express = require('express')
 const { exec } = require("child_process");
-const nodemailer = require('nodemailer');
 const fs = require('fs');
 
 
@@ -56,8 +55,6 @@ app_init = function() {
          console.log(`stderr: ${stderr}`);
          return;
       }
-      //console.log(`stdout: ${stdout}`);
-      //app_sendEmail(stdout);
       app_saveStartInfo(stdout);
    });
 }
@@ -75,29 +72,4 @@ app_saveStartInfo = function(stdout) {
    fs.writeFile(file, data, function (err) {
       if (err) { console.log( "Failed to write startinfo file: " + err); }
   });
-}
-
-app_sendEmail = function(stdout) {
-   var transporter = nodemailer.createTransport({
-      service: 'yahoo',
-      auth: {
-         user: 'xddtech',
-         pass: 'Cxxxx6'
-      }
-   });
-
-   var mailOptions = {
-      from: 'xddtech@yahoo.com',
-      to: 'xxxx@yahoo.com',
-      subject: 'Sending Email using Node.js',
-      text: 'That was easy!'
-   };
-
-   transporter.sendMail(mailOptions, function(error, info){
-      if (error) {
-         console.log(error);
-      } else {
-         console.log('Email sent: ' + info.response);
-      }
-   }); 
 }
