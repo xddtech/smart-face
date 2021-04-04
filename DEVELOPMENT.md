@@ -15,8 +15,6 @@ Current possible values are:
 var isWin = process.platform === "win32";
 
 
-
-
 # nodemon
 Monitor for any changes in your node.js application and automatically restart the server - perfect for development
 
@@ -34,3 +32,9 @@ $ nodemon main.js
     i. Open Windows Task Manager.
     ii. In the Processes tab, click View > Select Columns.
     iii. Choose PID and click OK.
+
+# Install http requests
+python -m pip install requests
+python -m pip --version
+
+

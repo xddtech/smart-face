@@ -4,6 +4,7 @@ const url = require('url');
 
 const hubFile = 'public/hub/action.txt';
 const startInfoFile = 'public/hub/startinfo.txt';
+const emptyAction = {'action':'', 'value':''};
 
 //http://localhost:3000/hub/action?lasttime=2615672679587.32
 exports.getActionObject = (req, res) => {
@@ -13,8 +14,10 @@ exports.getActionObject = (req, res) => {
       let stats = fs.statSync(hubFile);
       let filetime = stats.mtimeMs;
       if (filetime < lasttime) {
-         res.writeHead(404);
-         res.write('lasttime ' + lasttime + ' > filetime ' + filetime);
+         //res.writeHead(404);
+         //res.write('lasttime ' + lasttime + ' > filetime ' + filetime);
+         res.send(emptyAction);
+         return;
       }
    }
    const data = fs.readFileSync(hubFile, 'utf8')
