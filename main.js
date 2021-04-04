@@ -3,6 +3,7 @@ const express = require('express')
 const { exec } = require("child_process");
 const fs = require('fs');
 
+const log = require("./utils/Logger");
 
 const app = express()
 
@@ -35,12 +36,13 @@ app.get('/hub/action', hubController.getActionObject);
 app.get('/hub/startinfo', hubController.getStartInfo);
 
 app.listen(app.get("port"), () => {
-  console.log(`Server running at http://localhost:${app.get("port")}`);
+  log.info("======================================\n\n");
+  log.info(`Server running at http://localhost:${app.get("port")}`);
   app_init();
 })
 
 app_init = function() {
-   console.log('Initilize server application, OS: ' + process.platform);
+   log.info('Initilize server application, OS: ' + process.platform);
    let cmd = 'ifconfig';
    if (process.platform.includes('32') || process.platform.includes('64')) {
      cmd = 'ipconfig';
@@ -52,7 +54,7 @@ app_init = function() {
          return;
       }
       if (stderr) {
-         console.log(`stderr: ${stderr}`);
+         log.error(`init failed to exec ${cmd}: ${stderr}`);
          return;
       }
       app_saveStartInfo(stdout);
@@ -61,15 +63,15 @@ app_init = function() {
 
 app_saveStartInfo = function(stdout) {
    const file = 'public/hub/startinfo.txt';
-   console.log('Save start info to ' + file);
+   log.info('Save start info to ' + file);
    let info = 'Smart Serve started at ' + new Date().toString();
    info = info + '\r\n========================================\r\n';
    fs.writeFile(file, info, function(err) {
-      if (err) { console.log( "Failed to write startinfo file: " + err); }
+      if (err) { log.error( "Failed to write startinfo file: " + err); }
    });
 
    let data = stdout;
    fs.writeFile(file, data, function (err) {
-      if (err) { console.log( "Failed to write startinfo file: " + err); }
+      if (err) { log.error( "Failed to write startinfo file: " + err); }
   });
 }

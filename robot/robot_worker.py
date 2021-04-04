@@ -10,7 +10,17 @@ def run(event, action):
       if event.is_set():
          break;
       if action[0]:
-         log.info("worker loop " + str(i) + ": " + action[0] + "-" + action[1]);
+         log.debug("worker loop " + str(i) + ": " + action[0] + "-" + action[1]);
+         processAction(action[0], action[1]);
+         action[0] = "";
       i = i + 1;
       time.sleep(4);
+
+# ------------------------------------------------
+
+def processAction(cmd, value):
+   try:
+      log.debug("cmd" + cmd);
+   except Exception as ex:
+      log.error("processAction - " + str(ex));
       

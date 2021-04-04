@@ -35,7 +35,7 @@ def checkHubAction(ltime):
        else:
           resp.raise_for_status();
     except Exception as ex:
-        log.error(str(ex));
+        log.error("checkHubAction - " + str(ex));
 
 #------------------------------------------------
 
