@@ -1,5 +1,6 @@
 import time
 from logger import Logger
+import robot_cmd as robotCmd
 
 log = Logger("robot_worker")
 
@@ -10,8 +11,8 @@ def run(event, action):
       if event.is_set():
          break;
       if action[0]:
-         log.debug("worker loop " + str(i) + ": " + action[0] + "-" + action[1]);
-         processAction(action[0], action[1]);
+         # log.debug("worker loop " + str(i) + ": " + action[0] + "-" + action[1]);
+         robotCmd.processAction(action[0], action[1]);
          action[0] = "";
       i = i + 1;
       time.sleep(4);

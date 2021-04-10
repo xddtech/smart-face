@@ -12,6 +12,7 @@ app.use(express.urlencoded({
 }));
 app.use(express.json());
 app.use(express.static("public"));
+app.use(express.static("robot/logs"));
 app.set("view engine", "ejs")
 
 app.set("port", process.env.SMART_PORT || 3000)

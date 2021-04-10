@@ -51,7 +51,7 @@ if __name__ == "__main__":
    i = 1
    while True:
       try:
-          log.info("main loop " + str(i));
+          # log.info("main loop " + str(i));
           i = i + 1
           time.sleep(2);
 

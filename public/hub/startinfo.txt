@@ -1,0 +1,49 @@
+
+Windows IP Configuration
+
+
+Ethernet adapter Local Area Connection* 9:
+
+   Media State . . . . . . . . . . . : Media disconnected
+   Connection-specific DNS Suffix  . : 
+
+Ethernet adapter Local Area Connection:
+
+   Media State . . . . . . . . . . . : Media disconnected
+   Connection-specific DNS Suffix  . : 
+
+Wireless LAN adapter Wireless Network Connection:
+
+   Connection-specific DNS Suffix  . : hsd1.mi.comcast.net.
+   IPv6 Address. . . . . . . . . . . : 2601:401:100:2940:cc4:6193:f09b:baaf
+   Temporary IPv6 Address. . . . . . : 2601:401:100:2940:a18d:94a0:9b0c:eb0f
+   Link-local IPv6 Address . . . . . : fe80::cc4:6193:f09b:baaf%10
+   IPv4 Address. . . . . . . . . . . : 192.168.0.17
+   Subnet Mask . . . . . . . . . . . : 255.255.255.0
+   Default Gateway . . . . . . . . . : fe80::bea5:11ff:feef:aff6%10
+                                       192.168.0.1
+
+Tunnel adapter Local Area Connection* 9:
+
+   Media State . . . . . . . . . . . : Media disconnected
+   Connection-specific DNS Suffix  . : 
+
+Tunnel adapter isatap.hsd1.mi.comcast.net.:
+
+   Media State . . . . . . . . . . . : Media disconnected
+   Connection-specific DNS Suffix  . : hsd1.mi.comcast.net.
+
+Tunnel adapter isatap.{9768E8B3-AFEC-46C7-A344-1BFA0F49728D}:
+
+   Media State . . . . . . . . . . . : Media disconnected
+   Connection-specific DNS Suffix  . : 
+
+Tunnel adapter isatap.{70CBABE2-7D20-4E81-992E-28BF063B2DF0}:
+
+   Media State . . . . . . . . . . . : Media disconnected
+   Connection-specific DNS Suffix  . : 
+
+Tunnel adapter isatap.{AB124EB5-5F6E-4E9E-A38C-A7AAE4C236EA}:
+
+   Media State . . . . . . . . . . . : Media disconnected
+   Connection-specific DNS Suffix  . : 
