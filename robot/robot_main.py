@@ -1,68 +1,76 @@
 import requests as httpReq
 import time
-from threading import Thread, Event
 import json
 from types import SimpleNamespace
 
-import robot_worker as robotWorker
 from logger import Logger
+from robot_cmd import CmdProcessor
 
 
 log = Logger("robot_main");
+cmdProcessor = CmdProcessor();
 
 #------------------------------------------------
-
-event = Event();
 
 global action;
 action = ["main-action", "value"];
 
+checkActionSleepTimeSec = 1;
+runCmdSleepTimeSec = 0.5;
+mainLoopSleepTime = 0.25;
+
 #------------------------------------------------
 
-def checkHubAction(ltime):
-    action[0] = "";
-    action[1] = str(ltime);
-    URL = "http://localhost:3000/hub/action?lasttime=" + str(ltime);
+def checkRobotAction(lastTime):
+    URL = "http://localhost:3000/robot/action";
     try:
        resp = httpReq.get(URL);
        if resp.status_code == 200:
-          # log.info("resp=" + resp.text);
           actionJson = json.loads(resp.text, object_hook=lambda d: SimpleNamespace(**d));
-          if actionJson.action:
-             log.debug("actionJson=" + actionJson.action + ":" + actionJson.value);
-             action[0] = actionJson.action;
-             action[1] = actionJson.value;
+          #log.debug("actionJson=" + resp.text);
+          if actionJson.action and len(actionJson.action) > 0:
+             if (actionJson.time > lastTime):
+                action[0] = actionJson.action;
+                action[1] = actionJson.value;
+                log.debug("Received new action: " + action[0] + "/" + action[1]);
+                #cmdProcessor.setCmdAction(action[0], action[1]);
+                #cmdProcessor.setCmdAction(actionJson.action, actionJson.value);
+                cmdProcessor.setCmdAction(action[0], str(action[1]));
        else:
           resp.raise_for_status();
     except Exception as ex:
-        log.error("checkHubAction - " + str(ex));
+        log.error("checkRobotAction - " + str(ex));
 
 #------------------------------------------------
 
 if __name__ == "__main__": 
 
    log.info("Start robot main");
-   rthread = Thread(target=robotWorker.run, args=(event, action));
-   rthread.start();
-
+ 
    # milli-seconds
    lastTime = round(time.time() * 1000);
+   checkActionStartTime = lastTime;
+   runCmdStartTime = lastTime;
 
-   i = 1
    while True:
       try:
-          # log.info("main loop " + str(i));
-          i = i + 1
-          time.sleep(2);
+         currentTime = round(time.time() * 1000);
+         checkActionTimeDiff = (currentTime - checkActionStartTime) / 1000; #seconds
+         if checkActionTimeDiff > checkActionSleepTimeSec:
+            checkRobotAction(lastTime);
+            lastTime = round(time.time() * 1000);
+            checkActionStartTime = currentTime;
 
-          checkHubAction(lastTime);
+         currentTime = round(time.time() * 1000);
+         runCmdTimeDiff = (currentTime - runCmdStartTime) / 1000; #seconds
+         if runCmdTimeDiff > runCmdSleepTimeSec:
+            cmdProcessor.runCmd(runCmdTimeDiff);
+            runCmdStartTime = currentTime;
 
-          lastTime = round(time.time() * 1000);
+         time.sleep(mainLoopSleepTime);
 
       except KeyboardInterrupt:
           log.info("Stop on KeyboardInterrupt");
-          event.set();
           break;
    #-----------------------------------------------
 
-   rthread.join();

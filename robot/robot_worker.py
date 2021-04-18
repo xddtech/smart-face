@@ -12,7 +12,7 @@ def run(event, action):
          break;
       if action[0]:
          # log.debug("worker loop " + str(i) + ": " + action[0] + "-" + action[1]);
-         robotCmd.processAction(action[0], action[1]);
+         # robotCmd.processAction(action[0], action[1]);
          action[0] = "";
       i = i + 1;
       time.sleep(4);

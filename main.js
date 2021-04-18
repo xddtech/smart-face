@@ -30,6 +30,7 @@ app.get("/camera", homeController.showCurrent);
 
 const robotController = require("./controllers/robotController")
 app.get("/robot", robotController.getInfo);
+app.get("/robot/action", robotController.getActionObject);
 app.post("/robot", robotController.postAction);
 
 const hubController = require('./controllers/hubController')
